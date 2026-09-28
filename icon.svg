@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0f172a"/>
+      <stop offset="50%" stop-color="#1e1b4b"/>
+      <stop offset="100%" stop-color="#090d16"/>
+    </linearGradient>
+    <linearGradient id="glowGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#6366f1"/>
+      <stop offset="50%" stop-color="#a855f7"/>
+      <stop offset="100%" stop-color="#06b6d4"/>
+    </linearGradient>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="16" stdDeviation="24" flood-color="#6366f1" flood-opacity="0.4"/>
+    </filter>
+  </defs>
+
+  <!-- Background Card -->
+  <rect width="512" height="512" rx="110" fill="url(#bgGrad)"/>
+  
+  <!-- Outer glowing border -->
+  <rect x="16" y="16" width="480" height="480" rx="96" fill="none" stroke="url(#glowGrad)" stroke-width="4" opacity="0.4"/>
+
+  <!-- Brand Symbol -->
+  <g transform="translate(106, 106)" filter="url(#shadow)">
+    <!-- Photo Frame -->
+    <rect x="0" y="0" width="300" height="300" rx="48" fill="none" stroke="url(#glowGrad)" stroke-width="24"/>
+    <!-- Glowing Sun/Orb -->
+    <circle cx="90" cy="90" r="28" fill="#f43f5e"/>
+    <!-- Scenic Mountains / Wave -->
+    <path d="M 24 240 L 110 140 L 180 210 L 225 160 L 276 240 Z" fill="url(#glowGrad)" opacity="0.95"/>
+    <path d="M 120 240 L 185 170 L 276 240 Z" fill="#06b6d4" opacity="0.6"/>
+  </g>
+</svg>

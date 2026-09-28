@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+  <title>Wallora — Ultra HD Wallpapers & Studio</title>
+  <meta name="description" content="Discover, preview with realistic lock screen mockups, and generate original 4K wallpapers. 100% legal, licensed, and privacy-respecting.">
+  <meta name="theme-color" content="#c084fc">
+  
+  <!-- PWA Manifest & Apple Touch & Favicon -->
+  <link rel="icon" type="image/svg+xml" href="./icons/icon.svg">
+  <link rel="manifest" href="./manifest.json">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Wallora">
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- CSS Styles -->
+  <link rel="stylesheet" href="./css/styles.css">
+</head>
+<body>
+
+  <!-- Top App Header -->
+  <header class="app-header">
+    <div class="brand-wrapper" id="brand-logo" onclick="app.switchView('explore')">
+      <div class="brand-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <rect width="18" height="18" x="3" y="3" rx="2"/>
+          <circle cx="8.5" cy="8.5" r="1.5"/>
+          <path d="m21 15-5-5L5 21"/>
+        </svg>
+      </div>
+      <span class="brand-name">Wallora</span>
+    </div>
+
+    <div class="header-actions">
+      <button class="icon-btn" id="theme-toggle-btn" title="Switch Theme (Dark / OLED / Light)">
+        <svg id="theme-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/>
+        </svg>
+      </button>
+      <button class="icon-btn" id="install-pwa-btn" title="Install Wallora App" style="display: none;">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+          <polyline points="7 10 12 15 17 10"/>
+          <line x1="12" x2="12" y1="15" y2="3"/>
+        </svg>
+      </button>
+    </div>
+  </header>
+
+  <!-- Bottom / Desktop Sidebar Navigation -->
+  <nav class="bottom-nav">
+    <button class="nav-item active" data-view="explore">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="10"/>
+        <polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/>
+      </svg>
+      <span>Explore</span>
+    </button>
+    <button class="nav-item" data-view="daily">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/>
+      </svg>
+      <span>Daily</span>
+    </button>
+    <button class="nav-item" data-view="studio">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/>
+      </svg>
+      <span>Studio 4K</span>
+    </button>
+    <button class="nav-item" data-view="favorites">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/>
+      </svg>
+      <span>Saved</span>
+    </button>
+    <button class="nav-item" data-view="settings">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/>
+        <circle cx="12" cy="12" r="3"/>
+      </svg>
+      <span>Settings</span>
+    </button>
+  </nav>
+
+  <!-- MAIN APP VIEWS -->
+  <main>
+    <!-- VIEW 1: EXPLORE -->
+    <section id="view-explore" class="view-container active">
+      <!-- Non-intrusive Support Banner (Complies with Rule 3: Graceful, dismissible, non-blocking) -->
+      <div class="support-banner" id="support-banner">
+        <div class="support-text">
+          <strong>✨ 100% Free, Privacy-First & Legal Wallpapers</strong>
+          No intrusive ads, no paywalls. Original generative presets & verified licensed art.
+        </div>
+        <button class="support-close" id="close-support-banner" title="Dismiss">✕</button>
+      </div>
+
+      <!-- Spotlight Hero -->
+      <div class="hero-spotlight" id="hero-spotlight-card">
+        <img class="hero-img" id="hero-img" src="" alt="Featured Wallpaper">
+        <div class="hero-overlay">
+          <span class="hero-badge">⭐ Spotlight of the Day</span>
+          <h2 class="hero-title" id="hero-title">Cosmic Nebula Mirage</h2>
+          <div class="hero-meta">
+            <span id="hero-author">NASA / Unsplash</span>
+            <span class="badge-res">4K UHD</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Search & Filters -->
+      <div class="search-filter-section">
+        <div class="search-box">
+          <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/>
+          </svg>
+          <input type="text" id="search-input" class="search-input" placeholder="Search by tags, style, colors (e.g., AMOLED, cyber, mountains)...">
+        </div>
+
+        <!-- Categories Scroll -->
+        <div class="filter-scroll-row" id="categories-container"></div>
+
+        <!-- Color Palette Filter Row -->
+        <div class="color-dots-row" id="color-filters-container"></div>
+      </div>
+
+      <!-- Wallpaper Grid -->
+      <div class="wallpaper-grid" id="wallpaper-grid"></div>
+    </section>
+
+    <!-- VIEW 2: DAILY SPOTLIGHT -->
+    <section id="view-daily" class="view-container">
+      <div class="hero-spotlight" style="height: 380px; margin-bottom: 2rem;" id="daily-spotlight-hero">
+        <img class="hero-img" id="daily-hero-img" src="" alt="Daily Wallpaper">
+        <div class="hero-overlay">
+          <span class="hero-badge">🌟 Daily Curated Selection</span>
+          <h1 class="hero-title" id="daily-hero-title">Cosmic Nebula Mirage</h1>
+          <p id="daily-hero-desc" style="color: #cbd5e1; max-width: 600px; font-size: 0.95rem; margin-bottom: 1rem;"></p>
+          <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+            <button class="btn-primary" id="daily-preview-btn">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>
+              Live Mockup Preview
+            </button>
+            <button class="btn-secondary" id="daily-download-btn">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
+              Download Original 4K
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- VIEW 3: WALLORA STUDIO (INTERACTIVE 4K GENERATOR) -->
+    <section id="view-studio" class="view-container">
+      <div style="margin-bottom: 1.25rem;">
+        <h1 style="font-size: 1.5rem; font-weight: 700; margin-bottom: 4px;">Wallora Studio — Procedural 4K Generator</h1>
+        <p style="color: var(--text-secondary); font-size: 0.9rem;">
+          Generate 100% original, copyright-free high-resolution wallpapers directly in your browser.
+        </p>
+      </div>
+
+      <div class="studio-container">
+        <!-- Preview Canvas Card -->
+        <div class="studio-preview-card">
+          <div class="canvas-wrapper" id="canvas-wrapper">
+            <canvas id="generator-canvas"></canvas>
+          </div>
+          <div style="display: flex; gap: 8px; width: 100%;">
+            <button class="btn-secondary" id="studio-randomize-btn" style="flex: 1;">
+              🎲 Randomize
+            </button>
+            <button class="btn-primary" id="studio-export-4k-btn" style="flex: 2;">
+              ⚡ Export 4K UHD
+            </button>
+          </div>
+        </div>
+
+        <!-- Studio Controls Card -->
+        <div class="studio-controls-card">
+          <!-- Preset Style -->
+          <div class="control-group">
+            <label class="control-label">Generator Engine Style</label>
+            <div class="preset-grid" id="preset-buttons-container">
+              <button class="preset-btn active" data-preset="glow_mesh">Glow Mesh</button>
+              <button class="preset-btn" data-preset="aurora">Aurora Waves</button>
+              <button class="preset-btn" data-preset="cyber_grid">Cyberpunk Grid</button>
+              <button class="preset-btn" data-preset="starfield">Deep Starfield</button>
+              <button class="preset-btn" data-preset="geometric">Prism Geometry</button>
+            </div>
+          </div>
+
+          <!-- Color Palette Picker -->
+          <div class="control-group">
+            <label class="control-label">Chromatic Palette Tuning</label>
+            <div class="color-pickers-row">
+              <div class="color-input-wrap">
+                <input type="color" id="studio-color1" value="#8b5cf6">
+                <span>Primary</span>
+              </div>
+              <div class="color-input-wrap">
+                <input type="color" id="studio-color2" value="#06b6d4">
+                <span>Secondary</span>
+              </div>
+              <div class="color-input-wrap">
+                <input type="color" id="studio-color3" value="#ec4899">
+                <span>Accent</span>
+              </div>
+              <div class="color-input-wrap">
+                <input type="color" id="studio-bg" value="#09090b">
+                <span>Backdrop</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Aspect Ratio Switcher -->
+          <div class="control-group">
+            <label class="control-label">Target Aspect Ratio</label>
+            <div class="preview-mode-switch">
+              <button class="preview-mode-btn active" data-ratio="9:16">📱 Mobile (9:16)</button>
+              <button class="preview-mode-btn" data-ratio="16:9">💻 Desktop (16:9)</button>
+              <button class="preview-mode-btn" data-ratio="1:1">⬛ Square (1:1)</button>
+            </div>
+          </div>
+
+          <!-- Complexity & Glow Sliders -->
+          <div class="control-group">
+            <label class="control-label">
+              <span>Dynamic Complexity</span>
+              <span id="val-complexity">6</span>
+            </label>
+            <input type="range" class="custom-range" id="studio-complexity" min="2" max="14" value="6">
+          </div>
+
+          <div class="control-group">
+            <label class="control-label">
+              <span>Glow & Diffusion</span>
+              <span id="val-glow">60%</span>
+            </label>
+            <input type="range" class="custom-range" id="studio-glow" min="20" max="100" value="60">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- VIEW 4: FAVORITES -->
+    <section id="view-favorites" class="view-container">
+      <div style="margin-bottom: 1.5rem;">
+        <h1 style="font-size: 1.5rem; font-weight: 700;">Saved Collection</h1>
+        <p style="color: var(--text-secondary); font-size: 0.9rem;">Your offline bookmarks and favorite wallpapers.</p>
+      </div>
+      <div class="wallpaper-grid" id="favorites-grid"></div>
+      <div id="favorites-empty-state" style="display: none; text-align: center; padding: 4rem 1rem;">
+        <div style="font-size: 3rem; margin-bottom: 1rem;">💖</div>
+        <h3 style="font-weight: 600; margin-bottom: 0.5rem;">No saved wallpapers yet</h3>
+        <p style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 1.5rem;">Click the heart icon on any wallpaper to add it to your personal offline collection.</p>
+        <button class="btn-primary" onclick="app.switchView('explore')">Explore Catalog</button>
+      </div>
+    </section>
+
+    <!-- VIEW 5: SETTINGS & ABOUT -->
+    <section id="view-settings" class="view-container">
+      <div style="max-width: 680px; margin: 0 auto; display: flex; flex-direction: column; gap: 1.5rem;">
+        <h1 style="font-size: 1.5rem; font-weight: 700;">Preferences & About</h1>
+
+        <div class="studio-controls-card">
+          <h3 style="font-size: 1.1rem; font-weight: 600;">Display & Theme</h3>
+          <div class="preview-mode-switch">
+            <button class="preview-mode-btn" data-set-theme="dark">Midnight Dark</button>
+            <button class="preview-mode-btn" data-set-theme="oled">OLED Pure Black</button>
+            <button class="preview-mode-btn" data-set-theme="light">Clean Light</button>
+          </div>
+        </div>
+
+        <div class="studio-controls-card">
+          <h3 style="font-size: 1.1rem; font-weight: 600;">Content & Policy Standards</h3>
+          <p style="color: var(--text-secondary); font-size: 0.88rem; line-height: 1.6;">
+            <strong>Ad & Monetization Integrity:</strong> Wallora strictly adheres to ethical monetization. We never deploy intrusive interstitials, fake clicks, or disruptive popups. The application is completely functional even with ads disabled.
+          </p>
+          <p style="color: var(--text-secondary); font-size: 0.88rem; line-height: 1.6;">
+            <strong>Asset Licensing:</strong> All photography is licensed under the Unsplash Free License / Public Domain (CC0). All generative artworks are produced locally via Wallora Studio's procedural engine.
+          </p>
+        </div>
+
+        <div class="studio-controls-card">
+          <h3 style="font-size: 1.1rem; font-weight: 600;">App Version & PWA</h3>
+          <p style="color: var(--text-secondary); font-size: 0.88rem;">Wallora Web App v1.0.0 — PWA Enabled</p>
+          <button class="btn-secondary" id="install-pwa-btn-settings" style="align-self: flex-start;">
+            📲 Install Wallora to Home Screen / Desktop
+          </button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- WALLPAPER DETAIL & MOCKUP MODAL -->
+  <div class="modal-backdrop" id="detail-modal">
+    <div class="modal-dialog">
+      <button class="modal-close-btn" id="modal-close-btn" title="Close">✕</button>
+
+      <!-- Preview Mockup Side -->
+      <div class="modal-preview-side">
+        <div class="phone-mockup-frame" id="modal-mockup-frame">
+          <img id="modal-mockup-img" class="mockup-bg" src="" alt="Wallpaper Preview">
+          
+          <!-- Lock Screen Simulation Overlay -->
+          <div class="lockscreen-overlay active" id="modal-lockscreen-overlay">
+            <div class="lock-time-box">
+              <div class="lock-date" id="lock-date-display">Monday, September 28</div>
+              <div class="lock-clock" id="lock-clock-display">09:41</div>
+            </div>
+            <div class="lock-bottom-actions">
+              <div class="lock-icon-circle">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"/></svg>
+              </div>
+              <div class="lock-icon-circle">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+              </div>
+            </div>
+          </div>
+
+          <!-- Home Screen Simulation Overlay -->
+          <div class="homescreen-overlay" id="modal-homescreen-overlay">
+            <div class="app-icons-grid">
+              <div class="fake-icon"></div>
+              <div class="fake-icon"></div>
+              <div class="fake-icon"></div>
+              <div class="fake-icon"></div>
+              <div class="fake-icon"></div>
+              <div class="fake-icon"></div>
+              <div class="fake-icon"></div>
+              <div class="fake-icon"></div>
+            </div>
+            <div class="fake-dock">
+              <div class="fake-icon"></div>
+              <div class="fake-icon"></div>
+              <div class="fake-icon"></div>
+              <div class="fake-icon"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Info & Actions Side -->
+      <div class="modal-info-side">
+        <div class="modal-header-info">
+          <h2 class="modal-title" id="modal-title">Wallpaper Title</h2>
+          <div class="modal-author-row">
+            <span id="modal-author">Author Name</span>
+            <span class="license-pill" id="modal-license">Licensed</span>
+          </div>
+        </div>
+
+        <!-- Mockup Mode Switcher -->
+        <div class="control-group">
+          <label class="control-label">Live Screen Preview Mode</label>
+          <div class="preview-mode-switch">
+            <button class="preview-mode-btn active" id="btn-mode-lock">🔒 Lock Screen</button>
+            <button class="preview-mode-btn" id="btn-mode-home">📱 Home Screen</button>
+            <button class="preview-mode-btn" id="btn-mode-clean">🖼️ Clean View</button>
+          </div>
+        </div>
+
+        <!-- Color Palette Swatches -->
+        <div class="control-group">
+          <label class="control-label">Dominant Color Palette (Click to copy Hex)</label>
+          <div class="palette-preview-row" id="modal-palette-row"></div>
+        </div>
+
+        <!-- Download & Resolution Actions -->
+        <div class="download-options-group">
+          <label class="control-label">Download High-Resolution</label>
+          <div class="download-buttons-grid">
+            <button class="btn-primary" id="btn-download-4k">
+              ⚡ 4K UHD (Original)
+            </button>
+            <button class="btn-secondary" id="btn-download-qhd">
+              QHD (1440p)
+            </button>
+            <button class="btn-secondary" id="btn-download-fhd">
+              FHD (1080p)
+            </button>
+            <button class="btn-secondary" id="btn-modal-favorite">
+              ❤️ Save to Bookmarks
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification System -->
+  <div class="toast-container" id="toast-container"></div>
+
+  <!-- Scripts -->
+  <script src="./js/data.js"></script>
+  <script src="./js/generator.js"></script>
+  <script src="./js/app.js"></script>
+</body>
+</html>
